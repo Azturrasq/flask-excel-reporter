@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+
+{% block title %}Rapor - Büyük Beden Analizi{% endblock %}
+
+{% block styles %}
+<style>
+    .report-actions {
+        margin: 20px 0;
+        padding: 10px;
+        background-color: #f8f9fa;
+        border-radius: 5px;
+    }
+    .loading {
+        text-align: center;
+        padding: 20px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">📊 Büyük Beden Ürün Analiz Raporu</h2>
+
+<div class="report-actions">
+    <div class="row">
+        <div class="col-md-6">
+            <h5>Rapor Seçenekleri:</h5>
+            <a href="{{ download_url }}" class="btn btn-success">
+                <i class="bi bi-file-earmark-excel"></i> Excel Raporunu İndir
+            </a>
+        </div>
+        <div class="col-md-6">
+            <div class="input-group">
+                <input type="text" id="searchInput" class="form-control" placeholder="Model kodu veya beden ara...">
+                <button class="btn btn-outline-secondary" type="button" id="searchButton">Ara</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Rapor yükleniyor göstergesi -->
+<div id="loadingIndicator" class="loading">
+    <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Yükleniyor...</span>
+    </div>
+    <p>Rapor yükleniyor, lütfen bekleyin...</p>
+</div>
+
+<!-- Rapor içeriği -->
+<div id="reportContent" style="display: none;">
+    {{ html_report|safe }}
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Sayfa yüklendikten sonra çalışacak kod
+    document.addEventListener('DOMContentLoaded', function() {
+        // Biraz gecikme ile raporu göster (tüm DOM elementleri yüklensin)
+        setTimeout(function() {
+            document.getElementById('loadingIndicator').style.display = 'none';
+            document.getElementById('reportContent').style.display = 'block';
+        }, 500);
+        
+        // Arama fonksiyonu
+        document.getElementById('searchButton').addEventListener('click', performSearch);
+        
+        // Enter tuşuyla arama
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                performSearch();
+            }
+        });
+    });
+    
+    // Arama fonksiyonu
+    function performSearch() {
+        const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
+        const modelContainers = document.querySelectorAll('.model-container');
+        
+        if (searchTerm === '') {
+            // Arama terimi boşsa hepsini göster
+            modelContainers.forEach(container => {
+                container.style.display = 'flex';
+            });
+            return;
+        }
+        
+        // Her bir model için kontrol et
+        modelContainers.forEach(container => {
+            let found = false;
+            
+            // Model kodunda arama
+            const modelCodeElement = container.querySelector('.model-code');
+            if (modelCodeElement && modelCodeElement.textContent.toLowerCase().includes(searchTerm)) {
+                found = true;
+            }
+            
+            // Bedenlerde arama
+            const tableRows = container.querySelectorAll('table tr');
+            tableRows.forEach(row => {
+                if (row.cells && row.cells.length > 0) {
+                    const beden = row.cells[0].textContent.toLowerCase();
+                    if (beden.includes(searchTerm)) {
+                        found = true;
+                    }
+                }
+            });
+            
+            // Görünürlüğü ayarla
+            container.style.display = found ? 'flex' : 'none';
+        });
+    }
+</script>
+{% endblock %}

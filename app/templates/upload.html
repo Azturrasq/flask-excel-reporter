@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}Veri Yükleme - Büyük Beden Analizi{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">Veri Dosyalarını Yükle</h4>
+            </div>
+            <div class="card-body">
+                <form method="POST" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="sales_file" class="form-label">Satış Verileri (Excel)</label>
+                        <input type="file" class="form-control" id="sales_file" name="sales_file" accept=".xlsx,.xls" required>
+                        <div class="form-text">Satış verileri Excel dosyasını seçin</div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="stock_file" class="form-label">Stok Verileri (Excel)</label>
+                        <input type="file" class="form-control" id="stock_file" name="stock_file" accept=".xlsx,.xls" required>
+                        <div class="form-text">Stok verileri Excel dosyasını seçin</div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="image_file" class="form-label">Ürün Görselleri (Excel, İsteğe Bağlı)</label>
+                        <input type="file" class="form-control" id="image_file" name="image_file" accept=".xlsx,.xls">
+                        <div class="form-text">Ürün görsel URL'lerini içeren Excel dosyasını seçin (isteğe bağlı)</div>
+                    </div>
+                    
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="filter_large" name="filter_large" checked>
+                        <label class="form-check-label" for="filter_large">Sadece "büyük beden" içeren ürünleri analiz et</label>
+                    </div>
+                    
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">Yükle ve Analiz Et</button>
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer">
+                <h5>Gerekli Excel Dosya Formatları:</h5>
+                <ul>
+                    <li><strong>Satış Verileri:</strong> Barkod, Ürün, Seçenek, Miktar, Alış Fiyatı, Satış Fiyatı, Sipariş Tarihi sütunları</li>
+                    <li><strong>Stok Verileri:</strong> Barkod, Grup MPN, Stok sütunları</li>
+                    <li><strong>Görsel Verileri:</strong> Barkod, Resim 1 (görsel URL) sütunları</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

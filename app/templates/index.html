@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Ana Sayfa - Büyük Beden Analizi{% endblock %}
+
+{% block content %}
+<div class="px-4 py-5 my-5 text-center">
+    <h1 class="display-5 fw-bold text-body-emphasis">🧥 Büyük Beden Ürün Analiz Sistemi</h1>
+    <div class="col-lg-8 mx-auto">
+        <p class="lead mb-4">
+            Bu sistem, büyük beden ürünlerin satış ve stok verilerini analiz ederek detaylı raporlar oluşturur.
+            Son 90, 30 ve 15 günlük satış trendlerini, stok seviyelerini ve gelecek dönem tahminlerini görüntüleyebilirsiniz.
+        </p>
+        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+            <a href="{{ url_for('main.upload') }}" class="btn btn-primary btn-lg px-4 gap-3">Veri Yükle ve Analiz Et</a>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">📈 Satış Analizi</h5>
+                <p class="card-text">Büyük beden ürünlerin satış performansını analiz eder ve dönemsel trendleri gösterir.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">📦 Stok Durumu</h5>
+                <p class="card-text">Mevcut stok durumunu ve stokların tahmini yeterlilik süresini gösterir.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">🧮 Tahmin Modeli</h5>
+                <p class="card-text">Eğer stokta olsaydı ne kadar daha fazla satış olurdu hesaplaması yapar.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
